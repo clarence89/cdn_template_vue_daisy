@@ -3,10 +3,14 @@ error_reporting(0);
 session_start();
 date_default_timezone_set("Asia/Manila");
 $dbhost = "localhost";
-$dbname = "ihoms_inventory";
+$dbname = "student_management";
 $dbuser = "root";
 $dbpass = "";
 
-$db = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+// Create connection
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
-?>
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
