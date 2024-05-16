@@ -31,9 +31,7 @@ if (isset($_SESSION['iuid'])) {
                     <center>
                         <span class="text-2xl font-semibold">
                             <div>
-                                <a href="#">
-                                    <img src="/student-records/assets/img/mmwghlogo.png" alt="Logo" class="w-40 h-40">
-                                </a>
+
                                 <a href="/">
                                     <h1 class="text-5xl font-bold">Student Logs System</h1>
                                 </a>

@@ -38,7 +38,7 @@ if (empty($_SESSION['iuid'])) {
                         <li><a>Item 3</a></li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost text-xl"><img class="h-12 w-auto" src="/student-records/assets/img/mmwghlogo.png" alt="Logo"></a>
+
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal px-1">
                         <li><a href="/student-records/dashboard.php">Home</a></li>
