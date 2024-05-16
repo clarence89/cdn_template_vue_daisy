@@ -35,7 +35,7 @@ if (isset($_SESSION['iuid'])) {
                                     <img src="/student-records/assets/img/mmwghlogo.png" alt="Logo" class="w-40 h-40">
                                 </a>
                                 <a href="/">
-                                    <h1 class="text-5xl font-bold">IMIS Pharmacy System</h1>
+                                    <h1 class="text-5xl font-bold">Student Logs System</h1>
                                 </a>
                                 <!-- <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p> -->
                             </div>

@@ -56,17 +56,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $student = $result->fetch_all();
-        $response["student"] = $student;
+        $logs = $result->fetch_all(MYSQLI_ASSOC);
+        $groupedLogs = [];
+
+        foreach ($logs as $log) {
+            $date = date('F j, Y', strtotime($log['created_at']));
+            if (!isset($groupedLogs[$date])) {
+                $groupedLogs[$date] = [];
+            }
+            $groupedLogs[$date][] = $log;
+        }
+
+        $response["student"] = $groupedLogs;
         echo json_encode($response);
         exit;
     } else {
-        $response["error"] = "No student found with the provided ID.";
+        $response["error"] = "No student logs found with the provided ID.";
         echo json_encode($response);
         exit;
     }
-} else {
-    $response["error"] = "Invalid request method.";
-    echo json_encode($response);
-    exit;
 }

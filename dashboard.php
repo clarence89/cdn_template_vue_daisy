@@ -48,7 +48,7 @@ if (empty($_SESSION['iuid'])) {
 
             <div class="navbar-end">
                 <div class="dropdown dropdown-hover dropdown-left">
-                    <div tabindex="0" role="button" class="btn m-1">Hey, #NAME</div>
+                    <div tabindex="0" role="button" class="btn m-1">Hey, <?= $_SESSION['ifname'] ?></div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-black">
                         <li><a>Item 1</a></li>
                         <hr>
@@ -162,18 +162,33 @@ if (empty($_SESSION['iuid'])) {
         </div>
         <div v-if="isModalOpen" class="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex justify-center items-center">
             <div class="bg-white rounded-lg p-8 max-w-md mx-auto">
-                <h2 class="text-2xl font-semibold mb-4">Student Information</h2>
-                <div v-if="isLoading">Loading...</div>
+                <h2 class="text-2xl font-semibold mb-4">Student Entry Logs</h2>
+                <div v-if="isLoading"><span class="loading loading-spinner loading-lg"></span></div>
                 <div v-else>
-                    <ul v-else-if="studentInfo.student" class="divide-y divide-gray-200">
-                        <li v-for="(entry, index) in studentInfo.student" :key="index" class="py-2">
-                            <span class="font-semibold">Student has been seen at School Gate with Entry Type: </span>
-                            <span>{{ entry[0] }}</span>
-                            <span> at </span>
-                            <span>{{ entry[1] }}</span>
-                        </li>
-                    </ul>
-                    <p v-elseif="studentInfo.error">{{studentInfo.error}}</p>
+                    <div v-if="studentInfo.student" class="divide-y divide-gray-200">
+                        <div v-for="(entry, index) in studentInfo.student" :key="index" class="py-2">
+                            <kbd class="kbd">{{index}}</kbd>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>IN</th>
+                                        <th>OUT</th>
+                                        <th>Datetime</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="entries in entry">
+                                        <td></td>
+                                        <td>{{entries['type'] == 'IN' ? '✓' : ''}}</td>
+                                        <td>{{entries['type'] == 'OUT' ? '✓' : ''}}</td>
+                                        <td>{{formatTime(entries['created_at'])}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <p v-else-if="studentInfo.error">{{studentInfo.error}}</p>
                 </div>
                 <button @click="closeModal" class="mt-4 btn bg-gray-300 hover:bg-gray-400">Close</button>
             </div>
@@ -312,6 +327,14 @@ if (empty($_SESSION['iuid'])) {
                     isLoading.value = false;
 
                 };
+                const formatTime = (datetime) => {
+                    const date = new Date(datetime);
+                    return date.toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    });
+                };
                 return {
                     state,
                     handleSubmit,
@@ -323,6 +346,8 @@ if (empty($_SESSION['iuid'])) {
                     fetchStudentData,
                     isModalOpen,
                     studentInfo,
+                    isLoading,
+                    formatTime,
                 };
             }
         }).mount('#app');
